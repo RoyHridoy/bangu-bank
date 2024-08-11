@@ -17,6 +17,7 @@ $app->router->get( "/contact", function () {
 
 $app->router->get( "/", "home" );
 $app->router->get( "/register", [AuthController::class, 'register'] );
+$app->router->post( "/register", [AuthController::class, 'register'] );
 $app->router->get( "/login", [AuthController::class, 'login'] );
 $app->router->get( "/admin/customers", [AdminController::class, 'customers'] );
 $app->router->get( "/admin/transactions", [AdminController::class, 'transactions'] );

@@ -67,4 +67,9 @@ class Router
         include_once BASE_PATH . "/Views/layouts/{$layout}.view.php";
         return ob_get_clean();
     }
+
+    public function redirect( string $address )
+    {
+        $this->response->redirect( $address );
+    }
 }

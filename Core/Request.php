@@ -23,4 +23,13 @@ class Request
     {
         return $this->method() === 'post';
     }
+
+    public function getBody(): array
+    {
+        $body = [];
+        foreach ( $_REQUEST as $key => $value ) {
+            $body[$key] = filter_var( $value, FILTER_SANITIZE_SPECIAL_CHARS );
+        }
+        return $body;
+    }
 }

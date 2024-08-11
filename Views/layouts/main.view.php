@@ -1,3 +1,4 @@
+<?php use App\Core\Application;?>
 <!DOCTYPE html>
 <html
   class="h-full bg-white"
@@ -28,4 +29,16 @@
       }
     </style>
 {{content}}
+<?php if ( Application::$app->session->getFlash( 'success' ) ): ?>
+  <section class="font-semibold bg-emerald-200 px-6 py-3 border border-emerald-900 text-emerald-900 text-center w-fit absolute top-10 left-0 right-0 mx-auto rounded-lg">
+    <?php echo Application::$app->session->getFlash( 'success' ); ?>
+  </section>
+<?php endif;?>
+
+<?php if ( Application::$app->session->getFlash( 'error' ) ): ?>
+  <section class="font-semibold bg-red-200 px-6 py-3 border border-red-900 text-red-900 text-center w-fit absolute top-10 left-0 right-0 mx-auto  rounded-lg">
+    <?php echo Application::$app->session->getFlash( 'error' ); ?>
+  </section>
+<?php endif;?>
+</body>
 </html>
