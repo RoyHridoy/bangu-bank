@@ -34,7 +34,7 @@ class Router
         }
 
         if ( is_string( $action ) ) {
-            return "view";
+            return $this->renderView( $action );
         }
 
         if ( is_array( $action ) ) {
@@ -42,5 +42,29 @@ class Router
         }
 
         return call_user_func( $action, $this->request );
+    }
+
+    public function renderView( string $templateName, array $params = [], string $layout = "main" )
+    {
+        $layout  = $this->loadLayout( $layout );
+        $content = $this->loadContent( $templateName, $params );
+        return str_replace( "{{content}}", $content, $layout );
+    }
+
+    private function loadContent( string $templateName, array $params )
+    {
+        foreach ( $params as $key => $value ) {
+            $$key = $value;
+        }
+        ob_start();
+        include_once BASE_PATH . "/Views/{$templateName}.view.php";
+        return ob_get_clean();
+    }
+
+    private function loadLayout( string $layout )
+    {
+        ob_start();
+        include_once BASE_PATH . "/Views/layouts/{$layout}.view.php";
+        return ob_get_clean();
     }
 }

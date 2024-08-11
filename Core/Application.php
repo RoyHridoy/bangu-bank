@@ -4,7 +4,7 @@ namespace App\Core;
 
 class Application
 {
-    private static $app = null;
+    public static $app = null;
     public Router $router;
     private Request $request;
     private Response $response;
