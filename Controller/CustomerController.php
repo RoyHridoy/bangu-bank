@@ -94,11 +94,6 @@ class CustomerController extends Controller
                 $this->redirect( '/customer/dashboard' );
             }
 
-            // if ( $transaction->validate() && $transaction->transfer( $this->getUser() ) ) {
-            //     $this->setFlash( "success", "You have successfully transfer your money." );
-            //     $this->redirect( '/customer/dashboard' );
-            // }
-
             return $this->render( "/customer/transfer", [
                 'user'  => $this->getUser(),
                 'model' => $transaction,

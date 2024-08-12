@@ -39,7 +39,6 @@ class Transfer extends Transaction
         ];
         $isSentTransaction    = $this->save( $senderTransaction );
         $isReceiveTransaction = $this->save( $receiverTransaction );
-        // $isTransactionSuccess = $this->save( $senderTransaction );
         if ( !$isSentTransaction && !$isReceiveTransaction ) {
             return false;
         }

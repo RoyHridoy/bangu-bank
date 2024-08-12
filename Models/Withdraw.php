@@ -19,7 +19,6 @@ class Withdraw extends Transaction
         if($this->amount > $this->balance) {
             return "Insufficient Balance!";
         }
-        // dd( $transaction, date( "F j, Y, g:i:s a", 1723468595 ) );
         $isTransactionSuccess = $this->save( $transaction );
         if ( !$isTransactionSuccess ) {
             return false;

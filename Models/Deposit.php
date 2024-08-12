@@ -16,7 +16,6 @@ class Deposit extends Transaction
             'type'       => self::TYPE_DEPOSIT,
             'created_at' => time(),
         ];
-        // dd( $transaction, date( "F j, Y, g:i:s a", 1723468595 ) );
         $isTransactionSuccess = $this->save( $transaction );
         if ( !$isTransactionSuccess ) {
             return false;
