@@ -1,5 +1,8 @@
 # How to run?
+
 ```bash
+composer install
+
 php -S localhost:8000 public/index.php
 ```
 # How to create admin?
