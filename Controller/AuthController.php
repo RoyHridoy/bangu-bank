@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Controller;
 use App\Core\Request;
+use App\Models\Login;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -29,6 +30,28 @@ class AuthController extends Controller
 
     public function login( Request $request )
     {
-        return $this->render( "login" );
+        $loginUser = new Login;
+
+        if ( $request->isPost() ) {
+
+            $loginUser->loadData( $request->getBody() );
+
+            if ( $loginUser->validate() && !$loginUser->login() ) {
+                $this->setFlash( "error", "Wrong Credential. Please try again valid email and password." );
+            }
+            if ( $loginUser->validate() && $loginUser->login() ) {
+                $this->redirect( '/' );
+            }
+
+            return $this->render( "login", ['model' => $loginUser] );
+        }
+
+        return $this->render( "login", ['model' => $loginUser] );
+    }
+
+    public function logout(): void
+    {
+        $this->destroySession();
+        $this->redirect( '/' );
     }
 }

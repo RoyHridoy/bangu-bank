@@ -28,7 +28,12 @@ class CLI
     public function findOrFail( string $property, string | int $value ): array | bool
     {
         $user = array_filter( (array) $this->allData, fn( array $user ) => $user[$property] === $value );
-        return empty( $user ) ? false : $user;
+        if ( empty( $user ) ) {
+            return false;
+        }
+        foreach ( $user as $index => $value ) {
+            return [$index, $value];
+        }
     }
 
     public function createAdmin( int $index )

@@ -30,7 +30,7 @@ class Router
         $action = $this->routes[$method][$path] ?? false;
         if ( $action === false ) {
             $this->response->setStatusCode( 404 );
-            return "Not Found";
+            return $this->renderView( "404" );
         }
 
         if ( is_string( $action ) ) {
@@ -46,7 +46,7 @@ class Router
 
     public function renderView( string $templateName, array $params = [], string $layout = "main" )
     {
-        $layout  = $this->loadLayout( $layout );
+        $layout  = $this->loadLayout( $layout, $params );
         $content = $this->loadContent( $templateName, $params );
         return str_replace( "{{content}}", $content, $layout );
     }
@@ -61,8 +61,11 @@ class Router
         return ob_get_clean();
     }
 
-    private function loadLayout( string $layout )
+    private function loadLayout( string $layout, array $params )
     {
+        foreach ( $params as $key => $value ) {
+            $$key = $value;
+        }
         ob_start();
         include_once BASE_PATH . "/Views/layouts/{$layout}.view.php";
         return ob_get_clean();

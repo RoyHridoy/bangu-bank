@@ -80,7 +80,7 @@
                       <span
                         class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-sky-100">
                         <span class="font-medium leading-none text-sky-700"
-                          >AS</span
+                          ><?php echo "{$user['img']}"; ?></span
                         >
                       </span>
                       <!-- <img
@@ -99,14 +99,17 @@
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabindex="-1">
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    <?php use App\Core\Form\Form; Form::start("/logout") ?>
+                    <button
+                    type="submit"
+                      class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                       tabindex="-1"
                       id="user-menu-item-2"
-                      >Sign out</a
+                      >Sign out</button
                     >
+                    <?php Form::end() ?>
+
                   </div>
                 </div>
               </div>
@@ -181,16 +184,16 @@
                   <span
                     class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-sky-100">
                     <span class="font-medium leading-none text-sky-700"
-                      >AS</span
+                      ><?php echo "{$user['img']}"; ?></span
                     >
                   </span>
                 </div>
                 <div class="ml-3">
                   <div class="text-base font-medium text-white">
-                    Ahmed Shamim Hasan Shaon
+                  <?php echo "{$user['firstName']} {$user['lastName']}"; ?>
                   </div>
                   <div class="text-sm font-medium text-sky-300">
-                    ahmed@shamim.com
+                  <?php echo "{$user['email']}"; ?>
                   </div>
                 </div>
                 <button
@@ -212,11 +215,13 @@
                 </button>
               </div>
               <div class="px-2 mt-3 space-y-1">
-                <a
-                  href="#"
-                  class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
-                  >Sign out</a
+                <?php  Form::start("/logout") ?>
+                <button
+                type="submit"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
+                >Sign out</button
                 >
+                <?php Form::end() ?>
               </div>
             </div>
           </div>

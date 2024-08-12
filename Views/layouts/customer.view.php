@@ -39,42 +39,42 @@
   </head>
   <body class="h-full">
     <div class="min-h-full">
-      <div class="bg-emerald-600 pb-32">
+      <div class="pb-32 bg-emerald-600">
         <!-- Navigation -->
         <nav
-          class="border-b border-emerald-300 border-opacity-25 bg-emerald-600"
+          class="border-b border-opacity-25 border-emerald-300 bg-emerald-600"
           x-data="{ mobileMenuOpen: false, userMenuOpen: false }">
-          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 justify-between">
+          <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
               <div class="flex items-center px-2 lg:px-0">
                 <div class="hidden sm:block">
                   <div class="flex space-x-4">
                     <!-- Current: "bg-emerald-700 text-white", Default: "text-white hover:bg-emerald-500 hover:bg-opacity-75" -->
                     <a
                       href="./dashboard"
-                      class="bg-emerald-700 text-white rounded-md py-2 px-3 text-sm font-medium"
+                      class="px-3 py-2 text-sm font-medium text-white rounded-md bg-emerald-700"
                       aria-current="page"
                       >Dashboard</a
                     >
                     <a
                       href="./deposit"
-                      class="text-white hover:bg-emerald-500 hover:bg-opacity-75 rounded-md py-2 px-3 text-sm font-medium"
+                      class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-emerald-500 hover:bg-opacity-75"
                       >Deposit</a
                     >
                     <a
                       href="./withdraw"
-                      class="text-white hover:bg-emerald-500 hover:bg-opacity-75 rounded-md py-2 px-3 text-sm font-medium"
+                      class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-emerald-500 hover:bg-opacity-75"
                       >Withdraw</a
                     >
                     <a
                       href="./transfer"
-                      class="text-white hover:bg-emerald-500 hover:bg-opacity-75 rounded-md py-2 px-3 text-sm font-medium"
+                      class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-emerald-500 hover:bg-opacity-75"
                       >Transfer</a
                     >
                   </div>
                 </div>
               </div>
-              <div class="hidden sm:ml-6 sm:flex gap-2 sm:items-center">
+              <div class="hidden gap-2 sm:ml-6 sm:flex sm:items-center">
                 <!-- Profile dropdown -->
                 <div
                   class="relative ml-3"
@@ -83,19 +83,19 @@
                     <button
                       @click="open = !open"
                       type="button"
-                      class="flex rounded-full bg-white text-sm focus:outline-none"
+                      class="flex text-sm bg-white rounded-full focus:outline-none"
                       id="user-menu-button"
                       aria-expanded="false"
                       aria-haspopup="true">
                       <span class="sr-only">Open user menu</span>
                       <!-- <img
-                        class="h-10 w-10 rounded-full"
+                        class="w-10 h-10 rounded-full"
                         src="https://avatars.githubusercontent.com/u/831997"
                         alt="Ahmed Shamim Hasan Shaon" /> -->
                       <span
-                        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100">
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
                         <span class="font-medium leading-none text-emerald-700"
-                          >AS</span
+                          ><?php echo "{$user['img']}"; ?></span
                         >
                       </span>
                     </button>
@@ -105,35 +105,38 @@
                   <div
                     x-show="open"
                     @click.away="open = false"
-                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabindex="-1">
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    <?php use App\Core\Form\Form;
+Form::start( "/logout" )?>
+                    <button
+                    type="submit"
+                      class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                       tabindex="-1"
                       id="user-menu-item-2"
-                      >Sign out</a
+                      >Sign out</button
                     >
+                    <?php Form::end()?>
                   </div>
                 </div>
               </div>
-              <div class="-mr-2 flex items-center sm:hidden">
+              <div class="flex items-center -mr-2 sm:hidden">
                 <!-- Mobile menu button -->
                 <button
                   @click="mobileMenuOpen = !mobileMenuOpen"
                   type="button"
-                  class="inline-flex items-center justify-center rounded-md p-2 text-emerald-100 hover:bg-emerald-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-emerald-100 hover:bg-emerald-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500"
                   aria-controls="mobile-menu"
                   aria-expanded="false">
                   <span class="sr-only">Open main menu</span>
                   <!-- Icon when menu is closed -->
                   <svg
                     x-show="!mobileMenuOpen"
-                    class="block h-6 w-6"
+                    class="block w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -170,60 +173,60 @@
             x-show="mobileMenuOpen"
             class="sm:hidden"
             id="mobile-menu">
-            <div class="space-y-1 pt-2 pb-3">
+            <div class="pt-2 pb-3 space-y-1">
               <a
                 href="./dashboard"
-                class="bg-emerald-700 text-white block rounded-md py-2 px-3 text-base font-medium"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md bg-emerald-700"
                 aria-current="page"
                 >Dashboard</a
               >
 
               <a
                 href="./deposit"
-                class="text-white hover:bg-emerald-500 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-emerald-500 hover:bg-opacity-75"
                 >Deposit</a
               >
 
               <a
                 href="./withdraw"
-                class="text-white hover:bg-emerald-500 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-emerald-500 hover:bg-opacity-75"
                 >Withdraw</a
               >
 
               <a
                 href="./transfer"
-                class="text-white hover:bg-emerald-500 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-emerald-500 hover:bg-opacity-75"
                 >Transfer</a
               >
             </div>
-            <div class="border-t border-emerald-700 pb-3 pt-4">
+            <div class="pt-4 pb-3 border-t border-emerald-700">
               <div class="flex items-center px-5">
                 <div class="flex-shrink-0">
                   <!-- <img
-                    class="h-10 w-10 rounded-full"
+                    class="w-10 h-10 rounded-full"
                     src="https://avatars.githubusercontent.com/u/831997"
                     alt="" /> -->
                   <span
-                    class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100">
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
                     <span class="font-medium leading-none text-emerald-700"
-                      >AS</span
+                      ><?php echo "{$user['img']}"; ?></span
                     >
                   </span>
                 </div>
                 <div class="ml-3">
                   <div class="text-base font-medium text-white">
-                    Ahmed Shamim
+                    <?php echo "{$user['firstName']} {$user['lastName']}"; ?>
                   </div>
                   <div class="text-sm font-medium text-emerald-300">
-                    ahmed@shamim.com
+                    <?php echo "{$user['email']}"; ?>
                   </div>
                 </div>
                 <button
                   type="button"
-                  class="ml-auto flex-shrink-0 rounded-full bg-emerald-600 p-1 text-emerald-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600">
+                  class="flex-shrink-0 p-1 ml-auto rounded-full bg-emerald-600 text-emerald-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600">
                   <span class="sr-only">View notifications</span>
                   <svg
-                    class="h-6 w-6"
+                    class="w-6 h-6"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
@@ -236,12 +239,14 @@
                   </svg>
                 </button>
               </div>
-              <div class="mt-3 space-y-1 px-2">
-                <a
-                  href="#"
-                  class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-emerald-500 hover:bg-opacity-75"
-                  >Sign out</a
+              <div class="px-2 mt-3 space-y-1">
+              <?php Form::start( "/logout" )?>
+                <button
+                type="submit"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
+                >Sign out</button
                 >
+                <?php Form::end()?>
               </div>
             </div>
           </div>

@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Models\User;
+
 class Application
 {
     public static $app = null;
@@ -9,6 +11,7 @@ class Application
     private Request $request;
     private Response $response;
     public Session $session;
+    public User $user;
 
     private function __construct()
     {
@@ -16,6 +19,7 @@ class Application
         $this->response = new Response;
         $this->session  = new Session;
         $this->router   = new Router( $this->request, $this->response );
+        $this->user     = new User;
     }
 
     public static function create()
@@ -29,5 +33,18 @@ class Application
     public function run()
     {
         echo $this->router->resolve();
+    }
+
+    public function isAdmin()
+    {
+        return $this->user->isAdmin( $this->session->get( 'user' ) );
+    }
+    public function isCustomer()
+    {
+        return $this->user->isCustomer( $this->session->get( 'user' ) );
+    }
+    public function getUser()
+    {
+        return $this->user->getCurrentUser( $this->session->get( 'user' ) );
     }
 }

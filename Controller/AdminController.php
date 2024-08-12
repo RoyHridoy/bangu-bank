@@ -8,16 +8,22 @@ class AdminController extends Controller
 {
     public function customers()
     {
-        return $this->render( "admin/customers", [], "admin" );
+        return $this->render( "admin/customers", [
+            'user' => $this->getUser(),
+        ], "admin" );
     }
 
     public function transactions()
     {
-        return $this->render( "admin/transactions", [], "admin" );
+        return $this->render( "admin/transactions", [
+            'user' => $this->getUser(),
+        ], "admin" );
     }
 
     public function addCustomer()
     {
-        return $this->render( "admin/add-customer", [], "admin" );
+        return $this->render( "admin/add-customer", [
+            'user' => $this->getUser(),
+        ], "admin" );
     }
 }

@@ -44,4 +44,28 @@ class User extends DbModel
         }
         return true;
     }
+
+    public function getCurrentUser( int $id )
+    {
+        if ( !$id ) {
+            return false;
+        }
+        return $this->findOrFail( 'id', $id )[1];
+    }
+
+    public function isAdmin( int $id )
+    {
+        if ( !$id ) {
+            return false;
+        }
+        return $this->getCurrentUser( $id )['role'] === 'admin';
+    }
+
+    public function isCustomer( int $id )
+    {
+        if ( !$id ) {
+            return false;
+        }
+        return $this->getCurrentUser( $id )['role'] === 'user';
+    }
 }

@@ -26,7 +26,7 @@ abstract class Model
 
     private function fetchAllData(): void
     {
-        $this->allData = json_decode( file_get_contents( $this->tablePath ) );
+        $this->allData = json_decode( file_get_contents( $this->tablePath ), true );
     }
 
     public function loadData( $data )
@@ -110,5 +110,16 @@ abstract class Model
     public function getAllByPropertyName( string $property ): array
     {
         return array_column( $this->allData, $property );
+    }
+
+    public function findOrFail( string $property, string | int $value ): array | bool
+    {
+        $user = array_filter( (array) $this->allData, fn( array $user ) => $user[$property] === $value );
+        if ( empty( $user ) ) {
+            return false;
+        }
+        foreach ( $user as $index => $value ) {
+            return [$index, $value];
+        }
     }
 }

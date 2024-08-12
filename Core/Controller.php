@@ -19,4 +19,22 @@ class Controller
     {
         Application::$app->session->setFlash( $key, $message );
     }
+
+    public function destroySession(): void
+    {
+        Application::$app->session->remove( 'user' );
+    }
+
+    public function getUser()
+    {
+        $user = Application::$app->getUser() ?? false;
+        if ( !$user ) {
+            return false;
+        }
+        $userWithoutPassword = array_filter( $user, fn( $key ) => $key !== 'password', ARRAY_FILTER_USE_KEY );
+        return [
+             ...$userWithoutPassword,
+            'img' => strtoupper( $userWithoutPassword['firstName'][0] . $userWithoutPassword['firstName'][1] ),
+        ];
+    }
 }
