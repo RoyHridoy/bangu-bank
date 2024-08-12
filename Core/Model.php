@@ -5,14 +5,16 @@ namespace App\Core;
 define( "DB_PATH", BASE_PATH . "/Database//" );
 abstract class Model
 {
-    const RULE_REQUIRED = 'required';
-    const RULE_EMAIL    = 'email';
-    const RULE_MAX      = 'max';
-    const RULE_MIN      = 'min';
-    const RULE_MATCH    = 'match';
-    const RULE_UNIQUE   = 'unique';
-    const RULE_NUMBER   = 'number';
-    const RULE_POSITIVE = 'positive';
+    const RULE_REQUIRED      = 'required';
+    const RULE_EMAIL         = 'email';
+    const RULE_MAX           = 'max';
+    const RULE_MIN           = 'min';
+    const RULE_MATCH         = 'match';
+    const RULE_UNIQUE        = 'unique';
+    const RULE_NUMBER        = 'number';
+    const RULE_POSITIVE      = 'positive';
+    const RULE_EXIST         = 'exist';
+    const RULE_RESTRICT_SELF = 'restrict_self';
 
     public array $errors = [];
     protected $tablePath;
@@ -81,6 +83,14 @@ abstract class Model
                 if ( self::RULE_POSITIVE === $ruleName && $value < 0 ) {
                     $this->addError( $attribute, self::RULE_POSITIVE );
                 }
+
+                if ( self::RULE_EXIST === $ruleName && !in_array( $value, Application::$app->getAllUser( $attribute ) ) ) {
+                    $this->addError( $attribute, self::RULE_EXIST );
+                }
+
+                if ( self::RULE_RESTRICT_SELF === $ruleName && ( $value === Application::$app->getUser()[$attribute] ) ) {
+                    $this->addError( $attribute, self::RULE_RESTRICT_SELF );
+                }
             }
         }
         return empty( $this->errors );
@@ -89,14 +99,16 @@ abstract class Model
     public function errorMessages(): array
     {
         return [
-            self::RULE_REQUIRED => 'This field is required',
-            self::RULE_EMAIL    => 'This field is must be a valid email address',
-            self::RULE_NUMBER   => 'This field is must be a valid number',
-            self::RULE_POSITIVE => 'Value must be greater than 0',
-            self::RULE_MIN      => 'Min length of this field must be {min}',
-            self::RULE_MAX      => 'Max length of this field must be {max}',
-            self::RULE_MATCH    => 'This field must be the same as {match}',
-            self::RULE_UNIQUE   => 'Already exists',
+            self::RULE_REQUIRED      => 'This field is required',
+            self::RULE_EMAIL         => 'This field is must be a valid email address',
+            self::RULE_NUMBER        => 'This field is must be a valid number',
+            self::RULE_POSITIVE      => 'Value must be greater than 0',
+            self::RULE_MIN           => 'Min length of this field must be {min}',
+            self::RULE_MAX           => 'Max length of this field must be {max}',
+            self::RULE_MATCH         => 'This field must be the same as {match}',
+            self::RULE_UNIQUE        => 'Already exists',
+            self::RULE_EXIST         => 'This value is not found in database',
+            self::RULE_RESTRICT_SELF => 'This is you',
         ];
     }
 

@@ -15,7 +15,8 @@ class Field
     private string $label = '';
     public Model $model;
     public string $attribute;
-    private string $classes = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6 p-2";
+    private string $placeholder = '';
+    private string $classes     = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm sm:leading-6 p-2";
 
     public function __construct( Model $model, string $attribute )
     {
@@ -28,7 +29,7 @@ class Field
         return sprintf( '
             <div>
               <label for="%s" class="block text-sm font-medium leading-6 text-gray-900">%s</label>
-              <input type="%s" name="%s" id="%s" value="%s" class="%s %s" required>
+              <input type="%s" name="%s" id="%s" value="%s" class="%s %s" placeholder="%s" required>
               <div class="text-sm text-red-500"> %s </div>
             </div>
         ',
@@ -40,6 +41,7 @@ class Field
             $this->model->{$this->attribute},
             $this->classes,
             $this->model->hasError( $this->attribute ) ? 'border-red-300 dark:border-red-600' : 'border-gray-300 dark:border-gray-600',
+            $this->placeholder,
             $this->model->getFirstError( $this->attribute )
         );
     }
@@ -71,6 +73,12 @@ class Field
     public function setClasses( string $classes )
     {
         $this->classes = $classes;
+        return $this;
+    }
+
+    public function setPlaceholder( string $placeholder )
+    {
+        $this->placeholder = $placeholder;
         return $this;
     }
 }

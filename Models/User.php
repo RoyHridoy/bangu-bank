@@ -68,4 +68,14 @@ class User extends DbModel
         }
         return $this->getCurrentUser( $id )['role'] === 'user';
     }
+
+    public function getAllUser( string $property )
+    {
+        return array_column( $this->allData, $property );
+    }
+
+    public function getUserBy( string $property, $value )
+    {
+        return $this->findOrFail( $property, $value );
+    }
 }

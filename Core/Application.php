@@ -39,12 +39,25 @@ class Application
     {
         return $this->user->isAdmin( $this->session->get( 'user' ) );
     }
+
     public function isCustomer()
     {
         return $this->user->isCustomer( $this->session->get( 'user' ) );
     }
+
     public function getUser()
     {
         return $this->user->getCurrentUser( $this->session->get( 'user' ) );
     }
+
+    public function getAllUser( string $property )
+    {
+        return $this->user->getAllUser( $property );
+    }
+
+    public function getUserBy( string $property, $value )
+    {
+        return $this->user->getUserBy( $property, $value );
+    }
+
 }

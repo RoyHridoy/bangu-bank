@@ -6,6 +6,7 @@ use App\Core\Controller;
 use App\Core\Request;
 use App\Models\Deposit;
 use App\Models\Transaction;
+use App\Models\Transfer;
 use App\Models\Withdraw;
 
 class CustomerController extends Controller
@@ -74,10 +75,39 @@ class CustomerController extends Controller
         ], "customer" );
     }
 
-    public function transfer()
+    public function transfer( Request $request )
     {
+        $transaction = new Transfer();
+
+        if ( $request->isPost() ) {
+
+            $transaction->loadData( $request->getBody() );
+
+            if ( $transaction->validate() && ( $transaction->transfer( $this->getUser() ) === true ) ) {
+                $this->setFlash( "success", "You have successfully transfer your money." );
+                $this->redirect( '/customer/dashboard' );
+                return;
+            }
+
+            if ( $transaction->validate() && ( is_string( $transaction->transfer( $this->getUser() ) ) ) ) {
+                $this->setFlash( "error", $transaction->transfer( $this->getUser() ) );
+                $this->redirect( '/customer/dashboard' );
+            }
+
+            // if ( $transaction->validate() && $transaction->transfer( $this->getUser() ) ) {
+            //     $this->setFlash( "success", "You have successfully transfer your money." );
+            //     $this->redirect( '/customer/dashboard' );
+            // }
+
+            return $this->render( "/customer/transfer", [
+                'user'  => $this->getUser(),
+                'model' => $transaction,
+            ], "customer" );
+        }
+
         return $this->render( "/customer/transfer", [
-            'user' => $this->getUser(),
+            'user'  => $this->getUser(),
+            'model' => $transaction,
         ], "customer" );
     }
 }
