@@ -20,7 +20,7 @@
                 </dt>
                 <dd
                   class="flex-none w-full text-3xl font-medium leading-10 tracking-tight text-gray-900">
-                  $ <?php echo $model ? $model->balance : 0; ?>
+                  $ <?php echo $model ? number_format( $model->balance, 2 ) : 0; ?>
                 </dd>
               </div>
             </dl>
@@ -45,7 +45,7 @@
                           <th
                             scope="col"
                             class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                            Receiver Name
+                            Name
                           </th>
                           <th
                             scope="col"
@@ -54,7 +54,7 @@
                           </th>
                           <th
                             scope="col"
-                            class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            class="whitespace-nowrap text-right pr-10 px-2 py-3.5 text-sm font-semibold text-gray-900">
                             Amount
                           </th>
                           <th
@@ -65,98 +65,27 @@
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <tr>
+                        <?php foreach ( $model->getAllTransactionByUserId( $model->currentUserId ) as $transaction ): ?>
+                          <tr>
                           <td
                             class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                            Bruce Wayne
+                            <?php echo "{$transaction['user']['firstName']} {$transaction['user']['lastName']}" ?>
                           </td>
                           <td
                             class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">
-                            bruce@wayne.com
+                            <?php echo $transaction['email'] ?>
                           </td>
                           <td
-                            class="px-2 py-4 text-sm font-medium whitespace-nowrap text-emerald-600">
-                            +$10,240
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            29 Sep 2023, 09:25 AM
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                            Al Nahian
-                          </td>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">
-                            alnahian@2003.com
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm font-medium text-red-600 whitespace-nowrap">
-                            -$2,500
+                            class="px-2 text-right py-4 pr-10 text-sm font-medium whitespace-nowrap <?php echo $transaction['type'] === 'deposit' ? "text-emerald-600" : 'text-red-600'; ?> ">
+                            <?php echo $transaction['type'] === 'deposit' ? "+" : '-'; ?>$<?php echo number_format( $transaction['amount'], 2 ); ?>
                           </td>
                           <td
                             class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            15 Sep 2023, 06:14 PM
+                            <?php echo date( "d M Y, h:m:s A", $transaction['created_at'] ) ?>
                           </td>
                         </tr>
-                        <tr>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                            Muhammad Alp Arslan
-                          </td>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">
-                            alp@arslan.com
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm font-medium whitespace-nowrap text-emerald-600">
-                            +$49,556
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            03 Jul 2023, 12:55 AM
-                          </td>
-                        </tr>
+                        <?php endforeach;?>
 
-                        <tr>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                            Povilas Korop
-                          </td>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">
-                            povilas@korop.com
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm font-medium whitespace-nowrap text-emerald-600">
-                            +$6,125
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            07 Jun 2023, 10:00 PM
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                            Martin Joo
-                          </td>
-                          <td
-                            class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">
-                            martin@joo.com
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm font-medium text-red-600 whitespace-nowrap">
-                            -$125
-                          </td>
-                          <td
-                            class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
-                            02 Feb 2023, 8:30 PM
-                          </td>
-                        </tr>
                       </tbody>
                     </table>
                   </div>

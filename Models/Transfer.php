@@ -31,8 +31,8 @@ class Transfer extends Transaction
         }
         $receiverTransaction = [
             'id'         => $this->generateId() + 1,
-            'user_id'    => Application::$app->getUserBy( 'email', 'jhon@doe.com' )[1]['id'],
-            'email'      => $this->email,
+            'user_id'    => Application::$app->getUserBy( 'email', $this->email )[1]['id'],
+            'email'      => Application::$app->getUser()['email'],
             'amount'     => $this->amount,
             'type'       => self::TYPE_DEPOSIT,
             'created_at' => time(),

@@ -40,4 +40,24 @@ class Transaction extends DbModel
         $onlyAmounts              = array_column( $transactionByCurrentUser, 'amount' );
         return array_reduce( $onlyAmounts, fn( $acc, $curr ) => $acc + $curr, 0 );
     }
+
+    public function getAllTransactions()
+    {
+        return array_map( function ( $transaction ) {
+            $transaction['user'] = $transaction['email'] === 'self' ? Application::$app->getUserBy( 'id', $transaction['user_id'] )[1] : Application::$app->getUserBy( 'email', $transaction['email'] )[1];
+            return $transaction;
+        }, $this->allData );
+        dd( $this->allData );
+        return $this->allData;
+    }
+
+    public function getAllTransactionByUserId( int $id )
+    {
+        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['user_id'] === $id );
+    }
+
+    public function getAllTransactionByUserEmail( string $email )
+    {
+        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['email'] === $email );
+    }
 }

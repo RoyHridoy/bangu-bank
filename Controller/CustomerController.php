@@ -15,6 +15,9 @@ class CustomerController extends Controller
     {
         $transaction = new Transaction();
 
+        // dd($transaction->getAllTransactions());
+        // // dd($transaction->getAllTransactionByUserId(31), $transaction->getAllTransactionByUserEmail('nirob@example.com'), $transaction->getAllTransactions());
+
         return $this->render( "/customer/dashboard", [
             'user'  => $this->getUser(),
             'model' => $transaction,

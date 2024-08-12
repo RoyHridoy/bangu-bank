@@ -20,7 +20,7 @@
                 </dt>
                 <dd
                   class="flex-none w-full text-3xl font-medium leading-10 tracking-tight text-gray-900">
-                  $ <?php echo $model ? $model->balance : 0; ?>
+                  $ <?php echo $model ? number_format($model->balance, 2 ) : 0; ?>
                 </dd>
               </div>
             </dl>
