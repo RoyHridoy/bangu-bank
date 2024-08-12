@@ -1,7 +1,7 @@
 <header class="py-10">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold tracking-tight text-white">
-              Transactions
+              Transactions of <?php echo ucfirst("{$customer['firstName']} {$customer['lastName']}") ?>
             </h1>
           </div>
         </header>
@@ -15,7 +15,7 @@
               <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                   <p class="mt-2 text-sm text-gray-700">
-                    List of transactions made by the customers.
+                    List of transactions made by <?php echo ucfirst("{$customer['firstName']} {$customer['lastName']}") ?>.
                   </p>
                 </div>
               </div>
@@ -29,11 +29,16 @@
                           <th
                             scope="col"
                             class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                            Customer Name
+                            Name
                           </th>
                           <th
                             scope="col"
-                            class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                            Email
+                          </th>
+                          <th
+                            scope="col"
+                            class="whitespace-nowrap px-2 py-3.5 text-right pr-10 text-sm font-semibold text-gray-900">
                             Amount
                           </th>
                           <th
@@ -45,23 +50,27 @@
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
 
-                        <?php foreach ( array_reverse($model->getAllTransactions()) as $transaction ): ?>
+                      <?php foreach ( $transactions as $transaction ): ?>
                           <tr>
-                            <td
-                              class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                              <?php echo "{$transaction['user']['firstName']} {$transaction['user']['lastName']}" ?>
-                            </td>
-                            <td
-                              class="px-2 py-4 text-sm font-medium whitespace-nowrap <?php echo $transaction['type'] === 'deposit' ? "text-emerald-600" : 'text-red-600'; ?> ">
-                              <?php echo $transaction['type'] === 'deposit' ? "+" : '-'; ?>$<?php echo number_format( $transaction['amount'], 2 ); ?>
-                            </td>
-                            <td
-                              class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
-                              <?php echo date( "d M Y, h:m:s A", $transaction['created_at'] ) ?>
-                            </td>
-                          </tr>
-
+                          <td
+                            class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
+                            <?php echo "{$transaction['user']['firstName']} {$transaction['user']['lastName']}" ?>
+                          </td>
+                          <td
+                            class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">
+                            <?php echo $transaction['email'] ?>
+                          </td>
+                          <td
+                            class="px-2 text-right py-4 pr-10 text-sm font-medium whitespace-nowrap <?php echo $transaction['type'] === 'deposit' ? "text-emerald-600" : 'text-red-600'; ?> ">
+                            <?php echo $transaction['type'] === 'deposit' ? "+" : '-'; ?>$<?php echo number_format( $transaction['amount'], 2 ); ?>
+                          </td>
+                          <td
+                            class="px-2 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            <?php echo date( "d M Y, h:m:s A", $transaction['created_at'] ) ?>
+                          </td>
+                        </tr>
                         <?php endforeach;?>
+
                       </tbody>
                     </table>
                   </div>

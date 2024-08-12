@@ -37,4 +37,9 @@ class Controller
             'img' => strtoupper( $userWithoutPassword['firstName'][0] . $userWithoutPassword['lastName'][0] ),
         ];
     }
+
+    public function getUserById(int $id)
+    {
+        return Application::$app->getUserBy('id', $id);
+    }
 }

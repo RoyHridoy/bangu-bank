@@ -16,14 +16,13 @@ $app->router->get( "/contact", function () {
     return "contact";
 } );
 
-
 $app->router->get( "/", [HomeController::class, 'index'] );
 
 if ( $app->isAdmin() ) {
     $app->router->post( "/logout", [AuthController::class, 'logout'] );
     $app->router->get( "/admin/customers", [AdminController::class, 'customers'] );
     $app->router->get( "/admin/transactions", [AdminController::class, 'transactions'] );
-    $app->router->get( "/admin/add-customer", [AdminController::class, 'addCustomer'] );
+    $app->router->get( "/admin/customer-transactions/", [AdminController::class, 'customerTransactions'] );
 }
 
 if ( $app->isCustomer() ) {

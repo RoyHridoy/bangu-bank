@@ -65,7 +65,7 @@
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <?php foreach ( $model->getAllTransactionByUserId( $model->currentUserId ) as $transaction ): ?>
+                        <?php foreach ( array_reverse( $model->getAllTransactionByUserId( $model->currentUserId ) ) as $transaction ): ?>
                           <tr>
                           <td
                             class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">

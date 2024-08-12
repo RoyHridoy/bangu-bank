@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\Controller;
+use App\Core\Request;
 use App\Models\Transaction;
 use App\Models\User;
 
@@ -12,8 +13,8 @@ class AdminController extends Controller
     {
         $user = new User;
         return $this->render( "admin/customers", [
-            'user' => $this->getUser(),
-            'users' => $user->getAllUsers()
+            'user'  => $this->getUser(),
+            'users' => $user->getAllUsers(),
         ], "admin" );
     }
 
@@ -27,10 +28,16 @@ class AdminController extends Controller
         ], "admin" );
     }
 
-    public function addCustomer()
+    public function customerTransactions( Request $request )
     {
-        return $this->render( "admin/add-customer", [
-            'user' => $this->getUser(),
+        $transaction = new Transaction();
+
+        $customerId = (int) str_replace( "userId=", "", $request->getQueryString() );
+
+        return $this->render( "admin/customer-transactions", [
+            'user'         => $this->getUser(),
+            'customer'     => $this->getUserById( $customerId )[1],
+            'transactions' => array_reverse($transaction->getAllTransactionByUserId( $customerId )),
         ], "admin" );
     }
 }

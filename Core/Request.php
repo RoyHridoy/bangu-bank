@@ -32,4 +32,9 @@ class Request
         }
         return $body;
     }
+
+    public function getQueryString()
+    {
+        return $_SERVER['QUERY_STRING'];
+    }
 }

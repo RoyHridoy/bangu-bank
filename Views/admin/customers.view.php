@@ -22,14 +22,14 @@ $colors = ['bg-sky-500', 'bg-purple-500', 'bg-teal-500', 'bg-red-500', 'bg-blue-
                     profile picture.
                   </p>
                 </div>
-                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <!-- <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                   <a
                     href="./add-customer"
                     type="button"
                     class="block px-3 py-2 text-sm font-semibold text-center text-white rounded-md shadow-sm bg-sky-600 hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
                     Add Customer
                   </a>
-                </div>
+                </div> -->
               </div>
 
               <!-- Users List -->
@@ -53,15 +53,18 @@ $colors = ['bg-sky-500', 'bg-purple-500', 'bg-teal-500', 'bg-red-500', 'bg-blue-
                           <div class="flex-auto min-w-0">
                             <p
                               class="text-sm font-semibold leading-6 text-gray-900">
-                              <a href="./customer-transactions/<?php echo $user['id'] ?>">
+                              <a href="./customer-transactions/?userId=<?php echo $user['id'] ?>">
                                 <span
                                   class="absolute inset-x-0 bottom-0 -top-px"></span>
                                   <?php echo ucwords( "{$user['firstName']} {$user['lastName']}" ); ?>
+                                  <?php if($user['role'] === 'admin'): ?>
+                                  <span class="text-[12px] px-1 rounded-sm font-normal py-0.5 text-white bg-teal-500">Admin</span>
+                                  <?php endif; ?>
                               </a>
                             </p>
                             <p class="flex mt-1 text-xs leading-5 text-gray-500">
                               <a
-                                href="./customer_transactions.html"
+                                href="./customer-transactions/?userId=<?php echo $user['id'] ?>"
                                 class="relative truncate hover:underline"
                                 ><?php echo "{$user['email']}"; ?></a
                               >

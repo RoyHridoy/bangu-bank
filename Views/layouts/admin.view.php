@@ -51,12 +51,12 @@
                   <div class="flex space-x-4">
                     <!-- Current: "bg-sky-700 text-white", Default: "text-white hover:bg-sky-500 hover:bg-opacity-75" -->
                     <a
-                      href="./customers"
+                      href="/admin/customers"
                       class="px-3 py-2 text-sm font-medium text-white rounded-md bg-sky-700"
                       >Customers</a
                     >
                     <a
-                      href="./transactions"
+                      href="/admin/transactions"
                       class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
                       >Transactions</a
                     >
@@ -164,12 +164,12 @@
             id="mobile-menu">
             <div class="pt-2 pb-3 space-y-1">
               <a
-                href="./customers"
+                href="/admin/customers"
                 class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
                 >Customers</a
               >
               <a
-                href="./transactions"
+                href="/admin/transactions"
                 class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
                 >Transactions</a
               >
