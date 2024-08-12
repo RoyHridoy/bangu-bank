@@ -30,8 +30,11 @@ if ( $app->isCustomer() ) {
     $app->router->post( "/logout", [AuthController::class, 'logout'] );
     $app->router->get( "/customer/dashboard", [CustomerController::class, 'dashboard'] );
     $app->router->get( "/customer/deposit", [CustomerController::class, 'deposit'] );
+    $app->router->post( "/customer/deposit", [CustomerController::class, 'deposit'] );
     $app->router->get( "/customer/transfer", [CustomerController::class, 'transfer'] );
+    $app->router->post( "/customer/transfer", [CustomerController::class, 'transfer'] );
     $app->router->get( "/customer/withdraw", [CustomerController::class, 'withdraw'] );
+    $app->router->post( "/customer/withdraw", [CustomerController::class, 'withdraw'] );
 }
 
 if ( !$app->isAdmin() && !$app->isCustomer() ) {

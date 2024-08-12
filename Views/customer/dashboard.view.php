@@ -20,7 +20,7 @@
                 </dt>
                 <dd
                   class="flex-none w-full text-3xl font-medium leading-10 tracking-tight text-gray-900">
-                  $10,115,091.00
+                  $ <?php echo $model ? $model->balance : 0; ?>
                 </dd>
               </div>
             </dl>

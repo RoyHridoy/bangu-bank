@@ -34,7 +34,7 @@ class Controller
         $userWithoutPassword = array_filter( $user, fn( $key ) => $key !== 'password', ARRAY_FILTER_USE_KEY );
         return [
              ...$userWithoutPassword,
-            'img' => strtoupper( $userWithoutPassword['firstName'][0] . $userWithoutPassword['firstName'][1] ),
+            'img' => strtoupper( $userWithoutPassword['firstName'][0] . $userWithoutPassword['lastName'][0] ),
         ];
     }
 }

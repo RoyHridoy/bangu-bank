@@ -11,6 +11,8 @@ abstract class Model
     const RULE_MIN      = 'min';
     const RULE_MATCH    = 'match';
     const RULE_UNIQUE   = 'unique';
+    const RULE_NUMBER   = 'number';
+    const RULE_POSITIVE = 'positive';
 
     public array $errors = [];
     protected $tablePath;
@@ -71,6 +73,14 @@ abstract class Model
                 if ( self::RULE_UNIQUE === $ruleName && in_array( $value, $this->getAllByPropertyName( $attribute ) ) ) {
                     $this->addError( $attribute, self::RULE_UNIQUE );
                 }
+
+                if ( self::RULE_NUMBER === $ruleName && !is_numeric( $value ) ) {
+                    $this->addError( $attribute, self::RULE_NUMBER );
+                }
+
+                if ( self::RULE_POSITIVE === $ruleName && $value < 0 ) {
+                    $this->addError( $attribute, self::RULE_POSITIVE );
+                }
             }
         }
         return empty( $this->errors );
@@ -81,6 +91,8 @@ abstract class Model
         return [
             self::RULE_REQUIRED => 'This field is required',
             self::RULE_EMAIL    => 'This field is must be a valid email address',
+            self::RULE_NUMBER   => 'This field is must be a valid number',
+            self::RULE_POSITIVE => 'Value must be greater than 0',
             self::RULE_MIN      => 'Min length of this field must be {min}',
             self::RULE_MAX      => 'Max length of this field must be {max}',
             self::RULE_MATCH    => 'This field must be the same as {match}',
