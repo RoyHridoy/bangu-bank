@@ -69,7 +69,7 @@ class User extends DbModel
         return $this->getCurrentUser( $id )['role'] === 'user';
     }
 
-    public function getAllUser( string $property )
+    public function getAllOfColumn( string $property )
     {
         return array_column( $this->allData, $property );
     }
@@ -77,5 +77,10 @@ class User extends DbModel
     public function getUserBy( string $property, $value )
     {
         return $this->findOrFail( $property, $value );
+    }
+
+    public function getAllUsers()
+    {
+        return $this->allData;
     }
 }

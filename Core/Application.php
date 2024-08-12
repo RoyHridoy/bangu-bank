@@ -52,7 +52,7 @@ class Application
 
     public function getAllUser( string $property )
     {
-        return $this->user->getAllUser( $property );
+        return $this->user->getAllOfColumn( $property );
     }
 
     public function getUserBy( string $property, $value )
