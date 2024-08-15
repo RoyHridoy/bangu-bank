@@ -18,8 +18,7 @@ $colors = ['bg-sky-500', 'bg-purple-500', 'bg-teal-500', 'bg-red-500', 'bg-blue-
               <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                   <p class="mt-2 text-sm text-gray-600">
-                    A list of all the customers including their name, email and
-                    profile picture.
+                    A list of all the customers <b>(Latest first)</b>.
                   </p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
