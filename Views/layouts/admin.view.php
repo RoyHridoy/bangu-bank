@@ -1,3 +1,7 @@
+<?php 
+use App\Core\Application;
+use App\Core\Form\Form;
+?>
 <!DOCTYPE html>
 <html
   class="h-full bg-gray-100"
@@ -99,7 +103,7 @@
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabindex="-1">
-                    <?php use App\Core\Form\Form; Form::start("/logout") ?>
+                    <?php Form::start("/logout") ?>
                     <button
                     type="submit"
                       class="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -228,5 +232,17 @@
         </nav>
       {{content}}
     </div>
+
+<?php if ( Application::$app->session->getFlash( 'success' ) ): ?>
+  <section class="absolute left-0 right-0 px-6 py-3 mx-auto font-semibold text-center border rounded-lg bg-emerald-200 border-emerald-900 text-emerald-900 w-fit top-20">
+    <?php echo Application::$app->session->getFlash( 'success' ); ?>
+  </section>
+<?php endif;?>
+
+<?php if ( Application::$app->session->getFlash( 'error' ) ): ?>
+  <section class="absolute left-0 right-0 px-6 py-3 mx-auto font-semibold text-center text-red-900 bg-red-200 border border-red-900 rounded-lg w-fit top-20">
+    <?php echo Application::$app->session->getFlash( 'error' ); ?>
+  </section>
+<?php endif;?>
   </body>
 </html>

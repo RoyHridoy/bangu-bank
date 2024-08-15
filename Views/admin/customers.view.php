@@ -22,14 +22,14 @@ $colors = ['bg-sky-500', 'bg-purple-500', 'bg-teal-500', 'bg-red-500', 'bg-blue-
                     profile picture.
                   </p>
                 </div>
-                <!-- <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                   <a
                     href="./add-customer"
                     type="button"
                     class="block px-3 py-2 text-sm font-semibold text-center text-white rounded-md shadow-sm bg-sky-600 hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
                     Add Customer
                   </a>
-                </div> -->
+                </div>
               </div>
 
               <!-- Users List -->
@@ -38,7 +38,7 @@ $colors = ['bg-sky-500', 'bg-purple-500', 'bg-teal-500', 'bg-red-500', 'bg-blue-
                   <ul
                     role="list"
                     class="divide-y divide-gray-100">
-                    <?php foreach ( $users as $user ): ?>
+                    <?php foreach ( array_reverse($users) as $user ): ?>
                       <li
                         class="relative flex justify-between px-4 py-5 gap-x-6 hover:bg-gray-50 sm:px-6 lg:px-8">
                         <div class="flex gap-x-4">
