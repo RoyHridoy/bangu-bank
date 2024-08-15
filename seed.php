@@ -1,11 +1,5 @@
 <?php
 $tables         = ['users', 'transactions'];
-$userDb         = __DIR__ . "/Database/users.txt";
-$transactionsDb = __DIR__ . "/Database/transactions.txt";
-
-$dummyUsers = file_get_contents( __DIR__ . "/seed/users.txt" );
-
-$dummyTransactions = file_get_contents( __DIR__ . "/seed/transactions.txt" );
 
 try {
 
