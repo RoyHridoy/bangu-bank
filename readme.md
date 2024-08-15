@@ -24,6 +24,17 @@ php seed.php
 php -S localhost:8000 public/index.php
 ```
 
+# Seed User Information
+```txt
+hridoy@test.com (admin)
+jhon@doe.com
+jane@doe.com
+jefry@way.com
+nirob@example.com
+
+All password: 12345678
+```
+
 # How to create admin?
 
 To create admin:
