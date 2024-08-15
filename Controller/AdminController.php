@@ -24,7 +24,7 @@ class AdminController extends Controller
 
         return $this->render( "admin/transactions", [
             'user'  => $this->getUser(),
-            'model' => $transaction,
+            'transactions' => $transaction->getAllTransactions(),
         ], "admin" );
     }
 

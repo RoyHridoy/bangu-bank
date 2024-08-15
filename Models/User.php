@@ -79,7 +79,7 @@ class User extends DbModel
         return $this->findOrFail( $property, $value );
     }
 
-    public function getAllUsers()
+    public function getAllUsers():array
     {
         return $this->allData;
     }

@@ -65,11 +65,12 @@
                         </tr>
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
-                        <?php foreach ( array_reverse( $model->getAllTransactionByUserId( $model->currentUserId ) ) as $transaction ): ?>
+                        <?php foreach ( array_reverse( $transactions ) as $transaction ): ?>
                           <tr>
                           <td
                             class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
                             <?php echo "{$transaction['user']['firstName']} {$transaction['user']['lastName']}" ?>
+                            
                           </td>
                           <td
                             class="py-4 pl-4 pr-3 text-sm text-gray-500 whitespace-nowrap sm:pl-0">

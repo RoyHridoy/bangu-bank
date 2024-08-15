@@ -18,6 +18,7 @@ class CustomerController extends Controller
         return $this->render( "/customer/dashboard", [
             'user'  => $this->getUser(),
             'model' => $transaction,
+            'transactions' => $transaction->getAllTransactionByUserId($this->getUser()['id']),
         ], "customer" );
     }
 

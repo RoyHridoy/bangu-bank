@@ -41,14 +41,12 @@ class Transaction extends DbModel
         return array_reduce( $onlyAmounts, fn( $acc, $curr ) => $acc + $curr, 0 );
     }
 
-    public function getAllTransactions()
+    public function getAllTransactions():array
     {
         return array_map( function ( $transaction ) {
             $transaction['user'] = $transaction['email'] === 'self' ? Application::$app->getUserBy( 'id', $transaction['user_id'] )[1] : Application::$app->getUserBy( 'email', $transaction['email'] )[1];
             return $transaction;
         }, $this->allData );
-        dd( $this->allData );
-        return $this->allData;
     }
 
     public function getAllTransactionByUserId( int $id )

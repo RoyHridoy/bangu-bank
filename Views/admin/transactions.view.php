@@ -1,3 +1,4 @@
+<?php use App\Core\Application; ?>
 <header class="py-10">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold tracking-tight text-white">
@@ -45,11 +46,11 @@
                       </thead>
                       <tbody class="bg-white divide-y divide-gray-200">
 
-                        <?php foreach ( array_reverse($model->getAllTransactions()) as $transaction ): ?>
+                        <?php foreach ( array_reverse($transactions) as $transaction ): ?>
                           <tr>
                             <td
                               class="py-4 pl-4 pr-3 text-sm text-gray-800 whitespace-nowrap sm:pl-0">
-                              <?php echo "{$transaction['user']['firstName']} {$transaction['user']['lastName']}" ?>
+                              <?php $user = Application::$app->getUserBy('id',$transaction['user_id'])[1]; echo "{$user['firstName']} {$user['lastName']}" ?>
                             </td>
                             <td
                               class="px-2 py-4 text-sm font-medium whitespace-nowrap <?php echo $transaction['type'] === 'deposit' ? "text-emerald-600" : 'text-red-600'; ?> ">
