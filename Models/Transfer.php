@@ -24,6 +24,7 @@ class Transfer extends Transaction
             'email'      => $this->email,
             'amount'     => $this->amount,
             'type'       => self::TYPE_WITHDRAW,
+            'status'     => self::STATUS_VALID,
             'created_at' => time(),
         ];
         if ( $this->amount > $this->balance ) {
@@ -35,6 +36,7 @@ class Transfer extends Transaction
             'email'      => Application::$app->getUser()['email'],
             'amount'     => $this->amount,
             'type'       => self::TYPE_DEPOSIT,
+            'status'     => self::STATUS_VALID,
             'created_at' => time(),
         ];
         $isSentTransaction    = $this->save( $senderTransaction );

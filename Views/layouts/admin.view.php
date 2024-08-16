@@ -64,6 +64,15 @@ use App\Core\Form\Form;
                       class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
                       >Transactions</a
                     >
+                    <a
+                      href="/admin/review-transactions"
+                      class="relative px-3 py-2 pr-10 text-sm font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
+                      >Transactions review
+                      <?php if(isset($totalInvalid)): ?>
+                      <span class="absolute -right-0 top-0.5 text-[12px] rounded-lg p-1.5 min-w-8 text-center bg-red-400"> <?php echo $totalInvalid; ?> </span>
+                      <?php endif; ?>
+                      </a
+                    >
                   </div>
                 </div>
               </div>
@@ -176,6 +185,11 @@ use App\Core\Form\Form;
                 href="/admin/transactions"
                 class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
                 >Transactions</a
+              >
+              <a
+                href="/admin/review-transactions"
+                class="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75"
+                >Transactions review</a
               >
             </div>
             <div class="pt-4 pb-3 border-t border-sky-700">

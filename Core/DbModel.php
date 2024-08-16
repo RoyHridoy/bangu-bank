@@ -28,4 +28,16 @@ abstract class DbModel extends Model
         return $maxId + 1;
     }
 
+    public function removeItem( int $index )
+    {
+        array_splice( $this->allData, $index, 1 );
+        return $this->storeData();
+    }
+
+    public function approveItem( int $index )
+    {
+        $this->allData[$index]['status'] = 1;
+        return $this->storeData();
+    }
+
 }

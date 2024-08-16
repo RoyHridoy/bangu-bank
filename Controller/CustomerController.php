@@ -30,7 +30,7 @@ class CustomerController extends Controller
             $transaction->loadData( $request->getBody() );
 
             if ( $transaction->validate() && $transaction->deposit( $this->getUser() ) ) {
-                $this->setFlash( "success", "You have successfully deposited your money." );
+                $this->setFlash( "success", "Your deposited money is under reviewed. Wait for admin approval." );
                 $this->redirect( '/customer/dashboard' );
             }
 

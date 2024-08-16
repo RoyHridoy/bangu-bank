@@ -14,6 +14,7 @@ class Withdraw extends Transaction
             'email'      => !empty( $this->email ) ? $this->email : 'self',
             'amount'     => $this->amount,
             'type'       => self::TYPE_WITHDRAW,
+            'status'     => self::STATUS_VALID,
             'created_at' => time(),
         ];
         if($this->amount > $this->balance) {

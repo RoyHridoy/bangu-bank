@@ -25,6 +25,8 @@ if ( $app->isAdmin() ) {
     $app->router->get( "/admin/customer-transactions/", [AdminController::class, 'customerTransactions'] );
     $app->router->get( "/admin/add-customer", [AdminController::class, 'addCustomer'] );
     $app->router->post( "/admin/add-customer", [AdminController::class, 'addCustomer'] );
+    $app->router->get( "/admin/review-transactions", [AdminController::class, 'reviewTransactions'] );
+    $app->router->post( "/admin/review-transactions", [AdminController::class, 'reviewTransactions'] );
 }
 
 if ( $app->isCustomer() ) {

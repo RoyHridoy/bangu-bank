@@ -10,6 +10,9 @@ class Transaction extends DbModel
     const TYPE_WITHDRAW = 'withdraw';
     const TYPE_DEPOSIT  = 'deposit';
 
+    const STATUS_VALID   = 1;
+    const STATUS_INVALID = 0;
+
     public float $amount      = 0;
     public string $type       = '';
     public float $balance     = 0;
@@ -36,12 +39,12 @@ class Transaction extends DbModel
 
     private function getTotal( string $type )
     {
-        $transactionByCurrentUser = array_filter( $this->allData, fn( $transaction ) => $transaction['user_id'] === $this->currentUserId && $transaction['type'] === $type );
+        $transactionByCurrentUser = array_filter( $this->allData, fn( $transaction ) => $transaction['user_id'] === $this->currentUserId && $transaction['type'] === $type && $transaction['status'] === self::STATUS_VALID );
         $onlyAmounts              = array_column( $transactionByCurrentUser, 'amount' );
         return array_reduce( $onlyAmounts, fn( $acc, $curr ) => $acc + $curr, 0 );
     }
 
-    public function getAllTransactions():array
+    public function getAllTransactions(): array
     {
         return array_map( function ( $transaction ) {
             $transaction['user'] = $transaction['email'] === 'self' ? Application::$app->getUserBy( 'id', $transaction['user_id'] )[1] : Application::$app->getUserBy( 'email', $transaction['email'] )[1];
@@ -49,13 +52,23 @@ class Transaction extends DbModel
         }, $this->allData );
     }
 
+    public function getValidTransitions()
+    {
+        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['status'] === self::STATUS_VALID );
+    }
+
+    public function getInvalidTransitions()
+    {
+        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['status'] === self::STATUS_INVALID );
+    }
+
     public function getAllTransactionByUserId( int $id )
     {
-        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['user_id'] === $id );
+        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['user_id'] === $id && $transaction['status'] === self::STATUS_VALID );
     }
 
     public function getAllTransactionByUserEmail( string $email )
     {
-        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['email'] === $email );
+        return array_filter( $this->getAllTransactions(), fn( $transaction ) => $transaction['email'] === $email && $transaction['status'] === self::STATUS_VALID );
     }
 }

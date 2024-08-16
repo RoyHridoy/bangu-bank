@@ -14,6 +14,7 @@ class Deposit extends Transaction
             'email'      => $this->email,
             'amount'     => $this->amount,
             'type'       => self::TYPE_DEPOSIT,
+            'status'     => self::STATUS_INVALID,
             'created_at' => time(),
         ];
         $isTransactionSuccess = $this->save( $transaction );

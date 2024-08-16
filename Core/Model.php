@@ -52,7 +52,7 @@ abstract class Model
                     $ruleName = $rule[0];
                 }
 
-                if ( self::RULE_REQUIRED === $ruleName && !$value ) {
+                if ( self::RULE_REQUIRED === $ruleName && empty($value) && $value !== 0 ) {
                     $this->addError( $attribute, self::RULE_REQUIRED );
                 }
 
