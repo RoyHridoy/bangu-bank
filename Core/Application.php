@@ -30,6 +30,26 @@ class Application
         return self::$app;
     }
 
+    public function loadRoutes(): void
+    {
+        $routes = require_once BASE_PATH . "/routes/web.php";
+
+        foreach ( $routes as $route ) {
+            [$requestMethod, $path, $handler, $middleWare] = $route;
+
+            if ( !$middleWare ) {
+                $this->router->$requestMethod( $path, $handler );
+                continue;
+            }
+
+            foreach ( $middleWare as $middleWareMethod ) {
+                if ( $this->$middleWareMethod() ) {
+                    $this->router->$requestMethod( $path, $handler );
+                }
+            }
+        }
+    }
+
     public function run()
     {
         echo $this->router->resolve();
@@ -43,6 +63,11 @@ class Application
     public function isCustomer()
     {
         return $this->user->isCustomer( $this->session->get( 'user' ) );
+    }
+
+    public function isNotAuthenticated()
+    {
+        return !$this->isAdmin() && !$this->isCustomer();
     }
 
     public function getUser()
