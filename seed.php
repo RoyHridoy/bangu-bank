@@ -1,21 +1,28 @@
 <?php
-$tables         = ['users', 'transactions'];
+define( "BASE_PATH", __DIR__ );
+require_once BASE_PATH . "/vendor/autoload.php";
+
+use App\Core\ENVReader;
+use App\Core\Seeder\FileSeeder;
+use App\Core\Seeder\MysqlSeeder;
+
+$tables = ['users', 'transactions'];
 
 try {
 
-    foreach ( $tables as $table ) {
-        $tableLocation  = __DIR__ . "/Database/{$table}.txt";
-        $seederLocation = __DIR__ . "/seed/{$table}.txt";
+    ENVReader::load();
 
-        if ( !file_exists( $tableLocation ) ) {
-            throw new Exception( "{$table} Table Not Found! Migrate First." );
-        }
+    if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
 
-        if ( copy( $seederLocation, $tableLocation ) ) {
-            echo "Seed {$table} table successfully.";
-        } else {
-            echo "Failed to seed {$table} table.";
-        }
+        new FileSeeder( $tables );
+
+    } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+        new MysqlSeeder( $tables );
+
+    } else {
+
+        printf( "⛔ Seeding Failed.\n ⚠️ Check .env file and provide correct configuration\n" );
     }
 
 } catch ( \Throwable $e ) {
