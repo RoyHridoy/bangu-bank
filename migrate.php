@@ -1,22 +1,27 @@
 <?php
+define( "BASE_PATH", __DIR__ );
+require_once BASE_PATH . "/vendor/autoload.php";
+
+use App\Core\ENVReader;
+use App\Core\Migrations\FileMigration;
+use App\Core\Migrations\MysqlMigration;
 
 try {
-    $isDirectoryCreated = mkdir( "Database" );
+    ENVReader::load();
 
-    if ( !$isDirectoryCreated ) {
-        throw new Exception( "Permission Denied or Database Directory Already Exists when creating folder!\n" );
-    }
+    if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
 
-    $isUserDbCreated = file_put_contents( __DIR__ . "/Database/users.txt", "[]" );
-    if ( !$isUserDbCreated ) {
-        throw new Exception( "Permission Denied when creating user database!" );
-    }
+        new FileMigration();
 
-    $isTransactionDbCreated = file_put_contents( __DIR__ . "/Database/transactions.txt", "[]" );
-    if ( !$isTransactionDbCreated ) {
-        throw new Exception( "Permission Denied when creating transaction database!" );
+    } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+        new MysqlMigration();
+
+    } else {
+
+        printf( "⛔ Migration Failed.\n ⚠️ Check .env file and provide correct configuration\n" );
     }
-    printf( "✅ Successfully Created Migrations\n" );
 } catch ( \Throwable $e ) {
-    printf( "⛔ %s", $e->getMessage() );
+
+    printf( "⛔ %s\n", $e->getMessage() );
 }
