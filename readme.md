@@ -65,6 +65,7 @@ php bangu migrate
 ```bash
 php bangu seed
 ```
+*run at first without registering any user if need (for mysql)
 
 ## Run the Project
 

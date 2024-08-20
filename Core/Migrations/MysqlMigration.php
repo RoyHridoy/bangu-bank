@@ -26,7 +26,7 @@ class MysqlMigration
         $migrationsToApply = $this->migrationsToApply();
 
         if ( !$migrationsToApply ) {
-            $this->showMessage( "Noting to Migrate", "✅" );
+            $this->showMessage( "Nothing to Migrate", "✅" );
             return;
         }
 
