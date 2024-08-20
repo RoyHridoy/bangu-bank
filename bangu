@@ -1,16 +1,16 @@
 #!/usr/bin/env php
 <?php
-
+define( "BASE_PATH", __DIR__ );
 require_once __DIR__ . "/vendor/autoload.php";
 
 use App\Core\ExecuteCLICommand;
 
 try {
-    $command = $argv[1];
 
-    if ( $argv[2] ) {
+    if ( count( $argv ) !== 2 ) {
         throw new Exception( "Wrong Command.\nphp bangu -h to show available commands\n" );
     }
+    [$fileName, $command] = $argv;
 
     ExecuteCLICommand::run( $command );
 

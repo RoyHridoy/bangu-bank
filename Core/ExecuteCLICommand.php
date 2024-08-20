@@ -60,12 +60,13 @@ class ExecuteCLICommand
 
     private function serve()
     {
+        ENVReader::load();
         $port = 8080;
 
-        $doesCreateServer = shell_exec( "php -S localhost:{$port} public/index.php" );
+        $doesCreateServer = shell_exec( "php -S {$_ENV['DB_HOST']}:{$port} public/index.php" );
         while ( $doesCreateServer === null ) {
             ++$port;
-            $doesCreateServer = shell_exec( "php -S localhost:{$port} public/index.php" );
+            $doesCreateServer = shell_exec( "php -S {$_ENV['DB_HOST']}:{$port} public/index.php" );
         }
     }
 
