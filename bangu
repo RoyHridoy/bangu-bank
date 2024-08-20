@@ -5,9 +5,12 @@ require_once __DIR__ . "/vendor/autoload.php";
 
 use App\Core\ExecuteCLICommand;
 
-$command = $argv[1];
-
 try {
+    $command = $argv[1];
+
+    if ( $argv[2] ) {
+        throw new Exception( "Wrong Command.\nphp bangu -h to show available commands\n" );
+    }
 
     ExecuteCLICommand::run( $command );
 
