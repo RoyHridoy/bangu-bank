@@ -1,5 +1,4 @@
 <?php
-define( "BASE_PATH", dirname( __DIR__ ) );
 
 use App\Core\ENVReader;
 use App\Core\Migrations\FileMigration;
