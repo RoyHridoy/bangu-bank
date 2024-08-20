@@ -1,19 +1,3 @@
-# My Improvement comparing to the previous repository
-
-- Separate routes form index.php to `routes/web.php`
-- Provide `.env.example` as a configuration file.
-- 2 types of database (mysql or file) implemented.
-- make custom command `bangu` like `artisan` in laravel
-- available commands
-
-```bash
-php bangu serve
-php bangu createAdmin
-php bangu migrate
-php bangu seed
-php bangu -h
-```
-
 # How to run?
 
 ## Load all files
@@ -102,5 +86,15 @@ php bangu createAdmin
 # How to show available commands?
 
 ```bash
+php bangu -h
+```
+
+# Available Commands
+
+```bash
+php bangu serve
+php bangu createAdmin
+php bangu migrate
+php bangu seed
 php bangu -h
 ```
