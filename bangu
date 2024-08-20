@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . "/vendor/autoload.php";
+
+use App\Core\ExecuteCLICommand;
+
+$command = $argv[1];
+
+try {
+
+    ExecuteCLICommand::run( $command );
+
+} catch ( \Throwable $e ) {
+
+    printf( "⛔ {$e->getMessage()}" );
+}

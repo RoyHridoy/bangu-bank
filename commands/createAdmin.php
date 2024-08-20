@@ -1,9 +1,7 @@
 <?php
+define( "BASE_PATH", dirname( __DIR__ ) );
 
 use App\Core\CLIDb;
-define( "BASE_PATH", __DIR__ );
-
-require_once BASE_PATH . "/vendor/autoload.php";
 
 $db = new CLIDb( "users" );
 printf( "To create admin: \n  1. First Register as a Customer from website\n  2. Provide Email Address here:\n" );
