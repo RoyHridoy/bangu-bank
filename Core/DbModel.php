@@ -5,8 +5,24 @@ abstract class DbModel extends Model
 {
     public function save( $data ): bool
     {
-        $this->insertItem( $data );
-        return $this->storeData();
+        if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
+
+            $this->insertItem( $data );
+            return $this->storeData();
+
+        } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+            $data    = array_diff_key( $data, ['id' => true, "created_at" => true] );
+            $columns = $this->getDbColumnNames( $this->tableName() );
+
+            $sql  = "INSERT INTO {$this->tableName()}(" . join( ", ", $columns ) . ") VALUES (:" . join( ", :", $columns ) . ")";
+            $stmt = $this->pdo->prepare( $sql );
+            return $stmt->execute( $data );
+
+        } else {
+            echo "Unable to connect Database. Check .env file configuration.";
+            return false;
+        }
     }
 
     private function storeData()
@@ -28,16 +44,46 @@ abstract class DbModel extends Model
         return $maxId + 1;
     }
 
-    public function removeItem( int $index )
+    public function removeItem( array $transaction )
     {
-        array_splice( $this->allData, $index, 1 );
-        return $this->storeData();
+
+        if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
+            $index = $transaction[0];
+            array_splice( $this->allData, $index, 1 );
+            return $this->storeData();
+
+        } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+            $transactionId = $transaction[1]['id'];
+
+            $sql  = "DELETE FROM {$this->tableName()} WHERE id = :id";
+            $stmt = $this->pdo->prepare( $sql );
+            return $stmt->execute( ['id' => $transactionId] );
+
+        } else {
+            echo "Unable to connect Database. Check .env file configuration.";
+            return false;
+        }
     }
 
-    public function approveItem( int $index )
+    public function approveItem( array $transaction )
     {
-        $this->allData[$index]['status'] = 1;
-        return $this->storeData();
-    }
+        if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
+            $index                           = $transaction[0];
+            $this->allData[$index]['status'] = 1;
+            return $this->storeData();
 
+        } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+            $transactionId = $transaction[1]['id'];
+
+            $sql  = "UPDATE {$this->tableName()} SET status = :status WHERE id = :id";
+            $stmt = $this->pdo->prepare( $sql );
+            return $stmt->execute( ['status' => 1, 'id' => $transactionId] );
+
+        } else {
+            echo "Unable to connect Database. Check .env file configuration.";
+            return false;
+        }
+    }
 }

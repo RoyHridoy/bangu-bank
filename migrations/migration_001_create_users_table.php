@@ -20,7 +20,7 @@ class migration_001_create_users_table
             lastName VARCHAR(255) NOT NULL,
             role VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            created_at INT NOT NULL DEFAULT (UNIX_TIMESTAMP()),
             PRIMARY KEY (id)
         );" );
     }

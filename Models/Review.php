@@ -26,13 +26,13 @@ class Review extends DbModel
 
     public function review()
     {
-        $transactionIndex = $this->findOrFail( 'id', $this->transactionId )[0];
+        $transaction = $this->findOrFail( 'id', $this->transactionId );
         if ( $this->status === self::STATUS_VALID ) {
-            $this->approveItem( $transactionIndex );
+            $this->approveItem( $transaction );
             return true;
         }
 
-        $this->removeItem( $transactionIndex );
+        $this->removeItem( $transaction );
         return false;
     }
 }

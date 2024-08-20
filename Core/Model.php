@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use PDO;
+
 define( "DB_PATH", BASE_PATH . "/Database//" );
 abstract class Model
 {
@@ -17,6 +19,7 @@ abstract class Model
     const RULE_RESTRICT_SELF = 'restrict_self';
 
     public array $errors = [];
+    protected $pdo;
     protected $tablePath;
     protected array $allData;
     abstract public function rules(): array;
@@ -24,13 +27,43 @@ abstract class Model
 
     public function __construct()
     {
-        $this->tablePath = DB_PATH . $this->tableName() . ".txt";
-        $this->fetchAllData();
+        try {
+            ENVReader::load();
+            if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
+
+                $this->tablePath = DB_PATH . $this->tableName() . ".txt";
+                $this->fetchAllData();
+
+            } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+                $db        = Database::getInstance();
+                $this->pdo = $db->getPdo();
+                $this->fetchAllData();
+
+            } else {
+                echo "Unable to connect Database. Check .env file configuration.";
+            }
+
+        } catch ( \Throwable $e ) {
+            echo $e->getMessage();
+        }
     }
 
     private function fetchAllData(): void
     {
-        $this->allData = json_decode( file_get_contents( $this->tablePath ), true );
+        if ( strtolower( $_ENV['DB_TYPE'] ) === 'file' ) {
+
+            $this->allData = json_decode( file_get_contents( $this->tablePath ), true );
+
+        } elseif ( strtolower( $_ENV['DB_TYPE'] ) === 'mysql' ) {
+
+            $stmt = $this->pdo->prepare( "SELECT * FROM {$this->tableName()}" );
+            $stmt->execute();
+            $this->allData = $stmt->fetchAll();
+
+        } else {
+            echo "Unable to connect Database. Check .env file configuration.";
+        }
     }
 
     public function loadData( $data )
@@ -52,7 +85,7 @@ abstract class Model
                     $ruleName = $rule[0];
                 }
 
-                if ( self::RULE_REQUIRED === $ruleName && empty($value) && $value !== 0 ) {
+                if ( self::RULE_REQUIRED === $ruleName && empty( $value ) && $value !== 0 ) {
                     $this->addError( $attribute, self::RULE_REQUIRED );
                 }
 
@@ -145,5 +178,11 @@ abstract class Model
         foreach ( $user as $index => $value ) {
             return [$index, $value];
         }
+    }
+
+    protected function getDbColumnNames( string $tableName ): array
+    {
+        $stmt = $this->pdo->query( "SHOW COLUMNS FROM $tableName" );
+        return array_diff( $stmt->fetchAll( PDO::FETCH_COLUMN ), ['id', 'created_at'] );
     }
 }
